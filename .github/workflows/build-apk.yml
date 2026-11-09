@@ -18,7 +18,7 @@ jobs:
 
       - name: Extract ABM project
         run: |
-          unzip -o ABM_8_0_2_BUILD_READY_SEM_APK.zip
+          unzip -o ABM_8_0_2_BUILD_READY_CORRIGIDO.zip
           test -f abm_708_work/project/settings.gradle
           test -f abm_708_work/project/app/build.gradle
 
@@ -28,14 +28,9 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Android SDK components
+      - name: Install Android SDK
         run: |
           SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)
-          if [ -z "$SDKMANAGER" ]; then
-            echo "ERRO: sdkmanager não encontrado."
-            exit 1
-          fi
-          echo "SDK Manager encontrado: $SDKMANAGER"
           yes | "$SDKMANAGER" --licenses || true
           "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
