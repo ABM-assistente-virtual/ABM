@@ -18,7 +18,7 @@ jobs:
 
       - name: Extract ABM project
         run: |
-          unzip -o ABM_8_0_2_BUILD_READY_CORRIGIDO.zip
+          unzip -o ABM_8_0_2_BUILD_READY_CORRIGIDO_V2.zip
           test -f abm_708_work/project/settings.gradle
           test -f abm_708_work/project/app/build.gradle
 
@@ -31,6 +31,10 @@ jobs:
       - name: Install Android SDK
         run: |
           SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)
+          if [ -z "$SDKMANAGER" ]; then
+            echo "ERRO: Android SDK Manager não encontrado."
+            exit 1
+          fi
           yes | "$SDKMANAGER" --licenses || true
           "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
