@@ -1,10 +1,6 @@
 name: ABM 8.0.2 APK Builder
 
-'on':
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+on: [push, workflow_dispatch]
 
 permissions:
   contents: read
@@ -14,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Download repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Extract ABM project
@@ -43,8 +39,7 @@ jobs:
 
       - name: Build ABM APK
         working-directory: abm_708_work/project
-        run: |
-          gradle --no-daemon assembleDebug --stacktrace
+        run: gradle --no-daemon assembleDebug --stacktrace
 
       - name: Upload ABM APK
         uses: actions/upload-artifact@v4
